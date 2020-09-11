@@ -55,6 +55,8 @@ python bin/plasmidnet.py -f test.faa -o results -m model.zip
 
 [] better model
 
+[] testing
+
 ## training AUC monitoring
 
 ```
