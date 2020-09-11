@@ -1,1 +1,84 @@
-# PlasmidNet
+# PlasmidBoost
+
+## setup
+
+libraries used
+
+```
+from Bio import SeqIO
+from pytorch_tabnet.tab_model import TabNetClassifier
+from joblib import Parallel, delayed
+import string
+import re
+import os
+import sys
+import glob
+import gzip
+from Bio.SeqIO.FastaIO import SimpleFastaParser
+from Bio.SeqUtils.ProtParam import ProteinAnalysis
+from Bio.Data import IUPACData
+from Bio.SeqUtils.CodonUsage import CodonAdaptationIndex, CodonsDict
+from Bio.SeqUtils.MeltingTemp import Tm_NN
+from Bio.SeqUtils import GC, GC_skew, GC123
+from Bio.Seq import Seq
+from zlib import compress
+import pandas as pd
+import numpy as np
+from math import log
+import itertools
+from more_itertools import chunked
+from collections import namedtuple
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
+```
+
+need to install at least
+
+```
+pip install pytorch
+pip install pytorch_tabnet
+pip install biopython
+pip install pandas
+pip install numpy
+pip install joblib
+```
+
+Example of usage:
+
+```
+prodigal -i test.fa -o test.genes -a test.faa -p meta
+python bin/plasmidnet.py -f test.faa -o results -m model.zip
+```
+
+## TODO
+
+[] packaging
+[] better model
+
+## training AUC monitoring
+
+```
+---------------------------------------
+| EPOCH |  train  |   valid  | total time (s)
+| 1     | 0.70223 |  0.83537 |   5612.2
+| 2     | 0.89170 |  0.88819 |   11546.6
+| 3     | 0.92209 |  0.89378 |   16828.2
+| 4     | 0.93310 |  0.89493 |   22165.7
+| 5     | 0.93913 |  0.89281 |   27462.6
+| 6     | 0.94319 |  0.89315 |   32748.7
+| 7     | 0.94576 |  0.89494 |   38094.6
+| 8     | 0.94728 |  0.89518 |   43399.8
+| 9     | 0.94995 |  0.89568 |   48770.7
+| 10    | 0.95148 |  0.89479 |   53140.2
+| 11    | 0.95051 |  0.89264 |   55632.8
+| 12    | 0.94934 |  0.89470 |   58169.3
+| 13    | 0.95094 |  0.89290 |   60659.1
+| 14    | 0.95217 |  0.86314 |   63152.3
+| 15    | 0.95384 |  0.88983 |   70272.2
+| 16    | 0.95515 |  0.89196 |   77692.9
+| 17    | 0.95574 |  0.89301 |   84678.5
+| 18    | 0.95678 |  0.89194 |   87178.8
+| 19    | 0.95769 |  0.89262 |   90051.6
+Early stopping occured at epoch 19
+Training done in 90051.618 seconds.
+---------------------------------------
+```
