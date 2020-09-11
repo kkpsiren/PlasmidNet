@@ -52,6 +52,7 @@ python bin/plasmidnet.py -f test.faa -o results -m model.zip
 ## TODO
 
 [] packaging
+
 [] better model
 
 ## training AUC monitoring
