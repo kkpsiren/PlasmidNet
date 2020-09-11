@@ -371,7 +371,7 @@ if __name__ == '__main__':
     res = Parallel(n_jobs=njobs)(delayed(run)(i, batch) for i, batch in enumerate(
         batch_iterator(record_iter, calc_features_in_batches)))
     res = pd.concat([i for i in res])
-    model = TabNetClassifier(verbose=0)
+    model = TabNetClassifier(verbose=0,device_name='cpu')
     model.load_model(MODELPATH)
     loaded_preds = model.predict_proba(res.values)
     A = 'genes in total'
