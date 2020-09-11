@@ -90,7 +90,7 @@ Early stopping occured at epoch 19
 Training done in 90051.618 seconds.
 ---------------------------------------
 ```
-## confusion matrix of test contigs
+## test contigs confusion matrix
 ```
 array([[ 9935,   208],
        [ 1849, 14015]])
