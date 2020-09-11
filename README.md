@@ -36,7 +36,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 need to install at least
 
 ```
-pip install pytorch
+pip install torch
 pip install pytorch_tabnet
 pip install biopython
 pip install pandas
