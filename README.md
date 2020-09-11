@@ -51,6 +51,8 @@ prodigal -i test.fa -o test.genes -a test.faa -p meta
 python bin/plasmidnet.py -f test.faa -o results -m model.zip
 ```
 
+for big .faa files add more `--threads` for feature calculation parallelization (currently it does it in batches of 5000. 
+
 ## TODO
 
 [] packaging
