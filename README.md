@@ -1,4 +1,6 @@
-# PlasmidBoost
+# PlasmidNet
+
+## Introduction
 
 ## setup
 
