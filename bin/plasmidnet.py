@@ -331,6 +331,8 @@ if __name__ == '__main__':
                         type=str, dest="model", default=None)
     parser.add_argument("-j", "--threads", action="store",
                         type=int, dest='n_jobs', default=1)
+    parser.add_argument("-bs", "--batchsize", action="store",
+                        type=int, dest='batches', default=5000)
     parser.add_argument("-save", "--saving", action="store",
                         type=int, dest='saving', default=1)
     parser.add_argument("-t", "--threshold", action="store",
@@ -359,6 +361,8 @@ if __name__ == '__main__':
         os.mkdir(output_dir)
     # n_jobs is currently only for batch loading, modeling uses x cores currently as default
     njobs = args.n_jobs
+    calc_features_in_batches = args.batches
+
     prediction_cutoff_threshold = args.threshold
     proportion_of_plasmid_genes_in_contig = args.plasmids
     proportion_of_bacterial_genes_in_contig = args.bacteria
@@ -367,7 +371,6 @@ if __name__ == '__main__':
     handle = gzip.open(fasta_file, 'rt') if fasta_file.endswith(
         '.gz') else open(fasta_file)
     record_iter = SeqIO.parse(handle, "fasta")
-    calc_features_in_batches = 5000
     res = Parallel(n_jobs=njobs)(delayed(run)(i, batch) for i, batch in enumerate(
         batch_iterator(record_iter, calc_features_in_batches)))
     res = pd.concat([i for i in res])
