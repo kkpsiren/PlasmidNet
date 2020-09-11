@@ -330,7 +330,7 @@ if __name__ == '__main__':
     parser.add_argument("-m", "--model", action="store",
                         type=str, dest="model", default=None)
     parser.add_argument("-j", "--threads", action="store",
-                        type=int, dest='n_jobs', default=1)
+                        type=int, dest='n_jobs', default=12)
     parser.add_argument("-bs", "--batchsize", action="store",
                         type=int, dest='batches', default=5000)
     parser.add_argument("-save", "--saving", action="store",
