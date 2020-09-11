@@ -1,6 +1,7 @@
 # PlasmidNet
 
 ## Introduction
+Feel free to tweak code, add comments, etc. I quickly tested it with both Linux and Mac (CPU/GPU) to see if it works, so be aware it might be buggy as it hasn’t been packaged yet, also it might not be thread-safe yet but it is quite fast already. Looking forward for feedback.
 
 ## setup
 
