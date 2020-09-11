@@ -3,7 +3,7 @@
 # Last changed: Time-stamp: <Last changed 2020-09-11 16:21:01 by Kimmo Siren>
 
 from Bio import SeqIO
-from pytorch_tabnet.tab_model import TabNetClassifier
+from tabnet_hacked import TabNetClassifier
 from joblib import Parallel, delayed
 import string
 import re
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     res = Parallel(n_jobs=njobs)(delayed(run)(i, batch) for i, batch in enumerate(
         batch_iterator(record_iter, calc_features_in_batches)))
     res = pd.concat([i for i in res])
-    model = TabNetClassifier(verbose=0,device_name='cpu')
+    model = TabNetClassifier(verbose=0, device_name='cpu')
     model.load_model(MODELPATH)
     loaded_preds = model.predict_proba(res.values)
     A = 'genes in total'
