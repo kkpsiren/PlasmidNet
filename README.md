@@ -58,9 +58,13 @@ for big .faa files add more `--threads` for feature calculation parallelization 
 
 [] packaging
 
-[] better model
+[] better model?
 
 [] testing
+
+[] benchmark
+
+[] version control
 
 ## training AUC monitoring
 
