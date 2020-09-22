@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Created: Thu Jun  4 22:34:47 2020
 # Last changed: Time-stamp: <Last changed 2020-09-11 16:21:01 by Kimmo Siren>
-
+import torch
 from Bio import SeqIO
 from tabnet_hacked import TabNetClassifier
 from joblib import Parallel, delayed
@@ -30,8 +30,8 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 #from .bbcache import bbcachier
 
 
-property_residues = {'Polar': ['D', 'E', 'H', 'K', 'N', 'Q', 'R', 'S', 'T', 'Z'], 'Aliphatic': ['A', 'I', 'L', 'V'], 'Aromatic': ['F', 'H', 'W', 'Y'], 'Basic': ['H', 'K', 'R'], 'Small': ['A', 'B', 'C', 'D', 'G',
-                                                                                                                                                                                           'N', 'P', 'S', 'T', 'V'], 'Acidic': ['B', 'D', 'E', 'Z'], 'Charged': ['B', 'D', 'E', 'H', 'K', 'R', 'Z'], 'Tiny': ['A', 'C', 'G', 'S', 'T'], 'Non-polar': ['A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']}
+
+property_residues = {'Polar': ['D', 'E', 'H', 'K', 'N', 'Q', 'R', 'S', 'T', 'Z'], 'Aliphatic': ['A', 'I', 'L', 'V'], 'Aromatic': ['F', 'H', 'W', 'Y'], 'Basic': ['H', 'K', 'R'], 'Small': ['A', 'B', 'C', 'D', 'G','N', 'P', 'S', 'T', 'V'], 'Acidic': ['B', 'D', 'E', 'Z'], 'Charged': ['B', 'D', 'E', 'H', 'K', 'R', 'Z'], 'Tiny': ['A', 'C', 'G', 'S', 'T'], 'Non-polar': ['A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']}
 dayhoff_freq = {'A': 8.6, 'C': 2.9, 'E': 6.0, 'D': 5.5, 'G': 8.4, 'F': 3.6, 'I': 4.5, 'H': 2.0, 'K': 6.6, 'M': 1.7,
                 'L': 7.4, 'N': 4.3, 'Q': 3.9, 'P': 5.2, 'S': 7.0, 'R': 4.9, 'U': 0.1, 'T': 6.1, 'W': 1.3, 'V': 6.6, 'Y': 3.4}
 murphy_10_tab = {'A': 'A', 'C': 'C', 'E': 'E', 'D': 'E', 'G': 'G', 'F': 'F', 'I': 'L', 'H': 'H', 'K': 'K',
@@ -362,6 +362,11 @@ if __name__ == '__main__':
     # n_jobs is currently only for batch loading, modeling uses x cores currently as default
     njobs = args.n_jobs
     calc_features_in_batches = args.batches
+    # try and use njobs for torch cpu usage
+    torch.set_num_threads(int(args.n_jobs))
+    os.environ["OMP_NUM_THREADS"] = str(args.n_jobs)
+    os.environ["MKL_NUM_THREADS"] = str(args.n_jobs)
+
 
     prediction_cutoff_threshold = args.threshold
     proportion_of_plasmid_genes_in_contig = args.plasmids
