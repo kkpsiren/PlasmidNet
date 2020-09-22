@@ -5,44 +5,11 @@ Feel free to tweak code, add comments, etc. I quickly tested it with both Linux 
 
 ## setup
 
-libraries used
-
+Installation instructions
 ```
-from Bio import SeqIO
-from pytorch_tabnet.tab_model import TabNetClassifier
-from joblib import Parallel, delayed
-import string
-import re
-import os
-import sys
-import glob
-import gzip
-from Bio.SeqIO.FastaIO import SimpleFastaParser
-from Bio.SeqUtils.ProtParam import ProteinAnalysis
-from Bio.Data import IUPACData
-from Bio.SeqUtils.CodonUsage import CodonAdaptationIndex, CodonsDict
-from Bio.SeqUtils.MeltingTemp import Tm_NN
-from Bio.SeqUtils import GC, GC_skew, GC123
-from Bio.Seq import Seq
-from zlib import compress
-import pandas as pd
-import numpy as np
-from math import log
-import itertools
-from more_itertools import chunked
-from collections import namedtuple
-from argparse import ArgumentParser, RawDescriptionHelpFormatter
-```
-
-need to install at least
-
-```
-pip install torch
-pip install pytorch_tabnet
-pip install biopython
-pip install pandas
-pip install numpy
-pip install joblib
+conda create -p plasmidnet_env python=3.8
+source activate $(pwd)/plasmidnet_env
+pip install -r requirements.txt
 ```
 
 Example of usage:
