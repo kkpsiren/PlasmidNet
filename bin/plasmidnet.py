@@ -352,7 +352,7 @@ if __name__ == '__main__':
         DATASET = fasta_file.rsplit('/', maxsplit=1)[1]
     else:
         DATASET = fasta_file
-    SAVENAME = DATASET.split('.')[0]
+    SAVENAME = ".".join(DATASET.split('.')[:-1])
     if saving == 1:
         SAVING = True
     else:
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     torch.set_num_threads(int(args.n_jobs))
     os.environ["OMP_NUM_THREADS"] = str(args.n_jobs)
     os.environ["MKL_NUM_THREADS"] = str(args.n_jobs)
-
+    os.environ["OPENBLAS_NUM_THREADS"] = str(args.n_jobs)
 
     prediction_cutoff_threshold = args.threshold
     proportion_of_plasmid_genes_in_contig = args.plasmids
