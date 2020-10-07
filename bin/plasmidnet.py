@@ -30,12 +30,16 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 #from .bbcache import bbcachier
 
 
-
-property_residues = {'Polar': ['D', 'E', 'H', 'K', 'N', 'Q', 'R', 'S', 'T', 'Z'], 'Aliphatic': ['A', 'I', 'L', 'V'], 'Aromatic': ['F', 'H', 'W', 'Y'], 'Basic': ['H', 'K', 'R'], 'Small': ['A', 'B', 'C', 'D', 'G','N', 'P', 'S', 'T', 'V'], 'Acidic': ['B', 'D', 'E', 'Z'], 'Charged': ['B', 'D', 'E', 'H', 'K', 'R', 'Z'], 'Tiny': ['A', 'C', 'G', 'S', 'T'], 'Non-polar': ['A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']}
+property_residues = {'Polar': ['D', 'E', 'H', 'K', 'N', 'Q', 'R', 'S', 'T', 'Z'], 'Aliphatic': ['A', 'I', 'L', 'V'], 'Aromatic': ['F', 'H', 'W', 'Y'], 'Basic': ['H', 'K', 'R'], 'Small': ['A', 'B', 'C', 'D', 'G',
+                                                                                                                                                                                           'N', 'P', 'S', 'T', 'V'], 'Acidic': ['B', 'D', 'E', 'Z'], 'Charged': ['B', 'D', 'E', 'H', 'K', 'R', 'Z'], 'Tiny': ['A', 'C', 'G', 'S', 'T'], 'Non-polar': ['A', 'C', 'F', 'G', 'I', 'L', 'M', 'P', 'V', 'W', 'Y']}
 dayhoff_freq = {'A': 8.6, 'C': 2.9, 'E': 6.0, 'D': 5.5, 'G': 8.4, 'F': 3.6, 'I': 4.5, 'H': 2.0, 'K': 6.6, 'M': 1.7,
                 'L': 7.4, 'N': 4.3, 'Q': 3.9, 'P': 5.2, 'S': 7.0, 'R': 4.9, 'U': 0.1, 'T': 6.1, 'W': 1.3, 'V': 6.6, 'Y': 3.4}
 murphy_10_tab = {'A': 'A', 'C': 'C', 'E': 'E', 'D': 'E', 'G': 'G', 'F': 'F', 'I': 'L', 'H': 'H', 'K': 'K',
                  'M': 'L', 'L': 'L', 'N': 'E', 'Q': 'E', 'P': 'P', 'S': 'S', 'R': 'K', 'T': 'S', 'W': 'F', 'V': 'L', 'Y': 'F'}
+
+
+def create_validate_amino_acids_seq(seq):
+    return seq.replace('B', 'D').replace('Z', 'E').replace('J', 'I').replace('X', 'L')
 
 
 def biopython_proteinanalysis_seq(seq, scaling=False):
@@ -204,6 +208,7 @@ def biopython_proteinanalysis(entries, scaling=False):
 
 
 def RunAA(entries, scaling=False, verbose=False, splitted=False):
+    entries = [(i, create_validate_amino_acids_seq(seq)) for i, seq in entries]
     reduced_entries = [(name, ''.join([murphy_10_tab.get(x, x)
                                        for x in seq])) for name, seq in entries]
     names, sequences = list(zip(*entries))
@@ -405,4 +410,3 @@ if __name__ == '__main__':
         print('saved gene probabilities: {}/{}_gene_probabilities.tab'.format(output_dir, SAVENAME))
     else:
         print('Done. Saving was disabled')
-
