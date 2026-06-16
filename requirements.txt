@@ -12,5 +12,5 @@ scikit-learn==1.5.2
 scipy
 six==1.15.0
 threadpoolctl==2.1.0
-torch==1.13.1
+torch==2.12.0
 tqdm==4.67.1
